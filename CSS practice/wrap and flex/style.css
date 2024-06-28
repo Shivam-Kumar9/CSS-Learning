@@ -1,0 +1,36 @@
+/* *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+} */
+
+/* body,html{
+    height: 100%;
+    width: 100%;
+} */
+
+ #wrap{
+    display: flex;
+    flex-direction:row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    border: 5 px solid blue;
+ }
+
+ .box{
+    width: 55px;
+    height: 55px;
+    font-size: 3rem;
+    text-align: center;
+    border-radius: 10px;
+ }
+
+#b1,#b4,#b7,#b10{
+    background-color: orange;
+}
+#b2,#b5,#b8{
+    background-color: rgb(0, 98, 255);
+}
+#b3,#b6,#b9 {
+    background-color: rgb(92, 243, 107);
+}

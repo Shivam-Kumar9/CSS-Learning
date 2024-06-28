@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>navabar</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      body {
+        margin: 0;
+      }
+
+      nav {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid;
+        height: 300px;
+      }
+      /* navbar1 */
+      #sub_nav {
+        display: flex;
+        align-items: center;
+        border: 1px solid;
+        margin: 12px;
+        text-align: center;
+        height: 52px;
+      }
+      #sub_nav > div {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        border: 1px solid red;
+        height: auto;
+        /* width: 100%; */
+      }
+      .sub-nav-width-no-change > a {
+        letter-spacing: 4px;
+      }
+      .nav_pick_item {
+        padding: 0 9px 0 9px;
+      }
+
+      #sub_nav > div > a {
+        font-size: 25px;
+        text-decoration: none;
+        font-weight: 500;
+        color: black;
+      }
+      #sub_nav > div > p {
+        font-size: 14px;
+        font-weight: 550;
+        border: 1px solid red;
+      }
+      #sub_nav > div:nth-child(2) {
+        width: 100%;
+        /* height: 43px ! important ; */
+      }
+      /* #search{
+        display: flex;
+        justify-content: center;
+         
+      } */
+      #input {
+        height: 32px;
+        
+        width: 100%;
+        margin: 0 20px;
+        border-radius: 50px;
+        /* padding: 0 20px; */
+        padding-bottom: 5px;
+        text-align: start ;
+        border: 1.2px solid #000;
+        background-color: rgb(243, 243, 241);
+      }
+      #input > input {
+        height: 32px;
+        display: none;
+        justify-content: start;
+        width: 100%;
+        margin: 0 20px;
+        border-radius: 50px;
+        padding: 0 20px;
+        align-items: center;
+        text-align: center ;
+        border: 1.2px solid #000;
+        background-color: rgb(243, 243, 241);
+      }
+      #input:hover >input{
+        display: block;
+      }
+       
+
+
+      .nav_pick_item > img {
+        height: 32px;
+        width: 32px;
+      }
+      .nav_pick_item_smallText {
+        font-size: 12px;
+        text-align: start;
+        font-weight: lighter;
+      }
+      /* .sub-nav-width-no-change {
+        width: max-content;
+        min-width: max-content;
+      } */
+
+      .nav_pick_item:hover p {
+        text-decoration: underline;
+        /* border-bottom: #000; */
+        cursor: pointer;
+      }
+
+      @media all and (min-width: 730px) and (max-width: 1000px) {
+        .nav_pick_item {
+          display: none !important;
+        }
+      }
+
+      @media all and (min-width: 200px) and (max-width: 729px) {
+        /* navbar2 */
+        .nav_pick_item {
+          display: none !important;
+        }
+        #nav_part2 {
+          display: inline-block;
+        }
+      }
+      @media all and (min-width: 0px) and (max-width: 199px),
+        (min-width: 730px) {
+        #nav_part2 {
+          display: none;
+        }
+      }
+      #sub_nav2 {
+        display: flex;
+        justify-content: space-between;
+        height: 40px;
+        padding: 10px;
+      }
+      #sub_nav2 h3 {
+        margin: 0 10px 0 10px;
+      }
+      #sub_nav2 p {
+        margin: 0 10px 0 10px;
+      }
+      #sub_nav2 button {
+        height: 37px;
+        font-size: medium;
+        background-color: #000;
+        color: white;
+        padding: 0 30px 0 30px;
+        border: none;
+        border-radius: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div id="sub_nav">
+        <div class="sub-nav-width-no-change">
+          <a href="index.html">SEPHORA</a>
+        </div>
+        <div id="search">
+          <div id="input">
+             <p style="margin-left: 10px;"><span> <i class="fa-solid fa-magnifying-glass"></i></span>search</p>
+            <input type="text" placeholder="Search" />
+          </div>
+        </div>
+        <div class="nav_pick_item" class="sub-nav-width-no-change">
+          <img
+            src="https://cdn-icons-png.flaticon.com/128/4155/4155305.png"
+            alt=""
+          />
+          <p style="white-space: nowrap">
+            Stores & Services <br /><span class="nav_pick_item_smallText"
+              >Choose Your Store</span
+            >
+          </p>
+        </div>
+        <div class="nav_pick_item" class="sub-nav-width-no-change">
+          <img
+            src="https://cdn-icons-png.flaticon.com/128/3364/3364929.png"
+            alt=""
+          />
+          <p>Community</p>
+        </div>
+        <div class="nav_pick_item" class="sub-nav-width-no-change">
+          <img
+            src="https://cdn-icons-png.flaticon.com/128/1005/1005684.png"
+            alt=""
+          />
+          <p style="white-space: nowrap">
+            <b>Sign In</b><br /><span class="nav_pick_item_smallText"
+              >for FREE Shipping🚚</span
+            >
+          </p>
+        </div>
+        <div style="padding: 5px; width: 50px">
+          <img
+            style="width: 30px"
+            src="https://cdn-icons-png.flaticon.com/128/1077/1077035.png"
+            alt=""
+          />
+        </div>
+        <div style="padding: 5px; width: 50px">
+          <img
+            style="width: 30px"
+            src="https://cdn-icons-png.flaticon.com/128/2636/2636890.png"
+            alt=""
+          />
+        </div>
+      </div>
+
+      <div id="nav_part2">
+        <div id="sub_nav2">
+          <div>
+            <h3>Sign In for free shipping🚚</h3>
+            <p>
+              Don't have an account?<span
+                ><a
+                  href=""
+                  style="text-decoration: none; color: rgb(5, 158, 209)"
+                >
+                  create an account</a
+                ></span
+              >
+            </p>
+          </div>
+          <div>
+            <button><b>sign in</b></button>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </body>
+</html>

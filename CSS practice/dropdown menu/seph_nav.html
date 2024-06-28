@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      #nav2 {
+        height: 45px;
+        width: 100%;
+        margin: 20px 0 20px;
+        padding: 10px;
+        display: flex;
+        justify-content: space-around;
+        gap: 10px;
+        
+        background-color: black;
+        align-items: center;
+        overflow-y: hidden;
+      }
+      .dropdown{
+        position: relative;
+      }
+      .drop_a {
+        background-color: inherit;
+        padding: 5px;
+        font-size: large;
+        text-decoration: none;
+        color: white;
+        white-space: nowrap;
+      }
+      .drop_content a {
+        text-decoration: none;
+        color: rgb(0, 0, 0);
+      }
+
+      .drop_content {
+        width: 100%;
+        position: absolute;
+        /* display: none; */
+        visibility: hidden;
+        z-index: 1;
+        left: 0;
+        margin-top: 8px;
+      }
+      .droprow {
+         display: flex;
+        justify-content: space-between;
+      }
+      .nav_text_link {
+        display: flex;
+        font-size: large;
+      }
+
+      .dropColumn {
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        line-height: 6vh;
+        min-width: 250px;
+        white-space: nowrap;
+      }
+
+      .nav_hover_img {
+        display: flex;
+        justify-content: flex-end;
+        gap: 40px;
+        margin: 40px 40px 40px 0;
+         width: 70%;
+      }
+      .nav_hover_img > div {
+        width: 35%;
+       }
+      .nav_hover_img > div > img {
+        width: 100%;
+      }
+      .dropdown:hover .drop_content {
+        /* display: block; */
+        visibility: visible;
+        background-color: rgb(100, 91, 91);
+        text-decoration: dashed;
+      }
+      .dropColumn > a:hover {
+        text-decoration: underline;
+      }
+
+      @media all and (min-width: 300px) and (max-width: 1000px) {
+        #nav2 {
+          background-color: rgb(255, 255, 255);
+          display: flex;
+          padding: 4px;
+        }
+        .dropdown:nth-child(12),
+        .dropdown:nth-child(9),
+        .dropdown:nth-child(10),
+        .dropdown:nth-child(11) {
+          display: none;
+        }
+        .drop_a {
+          padding: 10px;
+          background-color: rgb(255, 255, 255);
+          color: rgb(0, 0, 0);
+          border-radius: 5px;
+          box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+            rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+        }
+         
+        .droprow {
+          display: flex;
+          justify-content: center;
+          flex-direction: column;
+        }
+        .dropColumn {
+          display: flex;
+          flex-direction: column;
+        }
+        .dropdown:hover .drop_content {
+          display: grid;
+          grid-template-columns: repeat(2,1fr);
+          background-color: rgb(245, 245, 245);
+          text-decoration: dashed;
+        }
+        .dropColumn > a:hover {
+          text-decoration: underline;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="nav2">
+      <div class="dropdown">
+        <a class="drop_a" href="">New</a>
+        <div class="drop_content">
+          <div class="droprow">
+            <div class="nav_text_link">
+              <div class="dropColumn">
+                <a href=""><b>All New</b></a>
+                <a href=""><b>Just Dropped</b></a>
+                <a href=""><b>New Makeup</b></a>
+                <a href=""><b>New SkinCare</b></a>
+                <a href=""><b>New Fragrance</b></a>
+                <a href=""><b>New Bath & Body</b></a>
+                <a href=""><b>New Tool & Brushes</b></a>
+              </div>
+              <div class="dropColumn">
+                <a href=""><b>The Next Big Thing</b></a>
+                <a href=""><b>Bestsellers</b></a>
+                <a href=""><b>Trending on Social</b></a>
+                <a href=""><b>Refillable Beauty Products</b></a>
+                <a href=""><b>Quizzes & Buying Guides</b></a>
+                <a href=""><b>Clean Beauty Guide</b></a>
+                <a href=""
+                  ><b>Clean+Planet Positive <br />BeautyGuide</b></a
+                >
+                <a href=""><b>FSA & HSA Eligible</b></a>
+              </div>
+            </div>
+            <div class="nav_hover_img">
+              <div>
+                <img
+                  src="https://www.sephora.com/contentimages/meganav/large/2024-april-skin-story-site-desktop-universal-navigation-button-release.jpg?imwidth=588"
+                  alt=""
+                />
+              </div>
+              <div>
+                <img
+                  src="https://www.sephora.com/contentimages/2024-4-1-rare-beauty-fos-soft-pinch-powder-blush-site-desktop-global-navigation-button-en-us.jpg?imwidth=588"
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="dropdown">
+        <a class="drop_a" href="">Brand</a>
+        <div class="drop_content">
+          <div class="droprow">
+            <div class="nav_text_link">
+              <div class="dropColumn">
+                <p><b>Brand A-Z</b></p>
+                <p style="padding-bottom: 20px"><b>SEPHORA COLLECTION</b></p>
+                <a href=""><b>New Brands</b></a>
+                <a href="">Brown Girl Jane</a>
+                <a href="">AAVRANI</a>
+                <a href="">Dr. Idriss</a>
+                <a href="">Prada Beauty</a>
+                <a href="">Iris&Romeo</a>
+              </div>
+              <div class="dropColumn">
+                <p><b>Oonly At Sephora</b></p>
+                <a href="">Rare Beauty By Selena Gomez</a>
+                <a href="">HAUS LABS By Lady Gaga</a>
+                <a href="">Mane</a>
+                <a href="">5 SENS</a>
+              </div>
+              <div class="dropColumn">
+                <p><b>Affordable Brands</b></p>
+                <a href="">SEPHORA COLLECTION</a>
+                <a href="">The Ordinary</a>
+                <a href="">The Inkey List</a>
+                <a href="">Verb</a>
+              </div>
+              <div class="dropColumn">
+                <p><b>Black-Owned Brands</b></p>
+                <a href="">PATTERN By Trance Ellis Ross</a>
+                <a href="">BREAD BEAUTY SUPPLLY</a>
+                <a href="">adwoa beauty</a>
+                <a href="">FORVR Mood</a>
+                <a href="">Melanin Haircare</a>
+                <a href="">Fashion Fair</a>
+                <a href="">Fenty Fragrance</a>
+              </div>
+              <div class="dropColumn">
+                <p><b>Clean at Sephora</b></p>
+                <a href="">ILIA</a>
+                <a href="">Ellis Brooklyn</a>
+                <a href="">dae</a>
+                <a href="">Living Proof</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="dropdown"><a class="drop_a" href="">Makeup</a></div>
+      <div class="dropdown"><a class="drop_a" href="">Skincare</a></div>
+      <div class="dropdown"><a class="drop_a" href="">Hair</a></div>
+      <div class="dropdown"><a class="drop_a" href="">Fragrance</a></div>
+      <div class="dropdown"><a class="drop_a" href="">Tools & Brushes</a></div>
+      <div class="dropdown"><a class="drop_a" href="">Bath & Body</a></div>
+      <div class="dropdown"><a class="drop_a" href="">Mini Size</a></div>
+      <div class="dropdown">
+        <a class="drop_a" href="">Gifts & Gift Cards</a>
+      </div>
+      <div class="dropdown"><a class="drop_a" href="">Beauty Under $20</a></div>
+      <div class="dropdown"><a class="drop_a" href="">Sale & Offers</a></div>
+    </div>
+  </body>
+</html>
