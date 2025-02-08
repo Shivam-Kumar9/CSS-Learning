@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+          "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+      }
+
+      nav {
+        height: 50px;
+        width: 70%;
+        border: 1px solid rgb(40, 145, 210);
+        display: inline-flex;
+        justify-content: space-around;
+        text-align: center;
+        align-items: center;
+        cursor:default;
+        background-color: brown;
+        color: beige;
+      }
+      div{
+        border: 1px solid rgb(40, 145, 210);
+        height: 100%; 
+       }
+      .padding{
+        padding-top: 10px;
+      }
+      div div {
+        display: none;
+       
+      }
+      div:hover div{
+        display: block;
+        cursor: pointer;
+       
+      }
+      
+      div:hover div:nth-child(odd) {
+        background-color:  rgb(81, 200, 200);
+      }
+      div:hover div:nth-child(even) {
+        background-color:  rgb(100, 218, 151);
+      }
+      div>h3+div{
+        background-color:  rgb(214, 228, 220) !important;
+        
+      }
+      nav a{
+        font-weight: bold;
+        text-decoration: none;
+        color: rgb(248, 250, 255);
+        padding-top: 10px;
+      }
+      a:active{
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="padding">
+        <h3>Project</h3>
+        <div>
+          <div>
+            <a target="_blank" href="https://snake.io/">Snake</a>
+          </div>
+          <div><a target="_blank" href="https://poki.com/en/g/tic-tac-toe-3">Tic-tac</a></div>
+          <div><a target="_blank" href="https://www.flipkart.com/">E-commerce</a></div>
+        </div>
+      </div>
+      <div class="padding"><h3>entertain</h3></div>
+      <div class="padding"><h3>document</h3></div>
+    </nav>
+  </body>
+</html>

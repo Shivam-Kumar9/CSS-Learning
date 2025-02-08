@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        /* border: 1px dashed; */
+        text-transform: capitalize;
+        font-size: 1.1rem;
+        margin: 0;
+      }
+      .box {
+        display: grid;
+        gap: 5px;
+        grid-template-areas:
+          "h h h"
+          "nav main side"
+          "f f f";
+        min-height: 100vh;
+        grid-template-columns: 200px 1fr 200px;
+        grid-template-rows: auto 1fr auto;
+      }
+      .box > *{
+        padding: 20px;
+        border: 2px solid #ccc;
+        border-radius: 15px;
+      }
+      .header {
+        grid-area: h;
+        background: greenyellow;
+      }
+      .nav {
+        grid-area: nav;
+        background-color: orange;
+      }
+      .main {
+        grid-area: main;
+        background: rgb(202, 202, 202);
+      }
+      .sidebar {
+        grid-area: side;
+        background: rgb(245, 245, 140);
+      }
+      .footer {
+        grid-area: f;
+        background: #457ceb;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <header class="header">header</header>
+      <nav class="nav">navigation</nav>
+      <main class="main">main content</main>
+      <aside class="sidebar">sidebar</aside>
+      <footer class="footer">footer</footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width='device-width', initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .container {
+        display: grid;
+        border: 1px solid;
+        grid-template-columns: 4fr 1fr 2fr ; 
+        grid-template-areas:
+          "nav nav nav"
+          "si main main"
+          "si main main"
+          "footer footer footer";
+      }
+      .nav {
+        grid-area: nav;
+      }
+      .main {
+        grid-area: main;
+        height: 100px;
+      }
+      .si{
+         grid-row: si;
+      }
+      .footer {
+        grid-area: footer;
+      }
+      .container div:nth-child(odd) {
+        border: 0.5px solid red;
+      }
+      .container div:nth-child(even) {
+        border: 1px solid rgb(129, 118, 118);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="nav"><p>navbar</p></div>
+      <div class="si"><p>side</p></div>
+      <div class="main"><p>main</p></div>
+      <div class="footer"><p>footer</p></div>
+    </div>
+  </body>
+</html>
