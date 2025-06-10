@@ -5,234 +5,25 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Document</title>
    <style>
-      *{
-         margin: 0;
-         padding: 0;
-         box-sizing: border-box;
-       }
-      .box{
-         /* background: #aeaeae; */
-         width: auto;
-         display: grid;
-         grid-template-columns: repeat(18,50px);
-         grid-template-rows: repeat(9,50px);
-         gap: 5px;
-      }
+      
+.box {
+  box-sizing: content-box;
+  /* width: 200px;
+  padding: 20px; */
+  border: 2px solid #000;
+}
+p{
+  border: 0.1px solid #000;
+  line-height: 10%;
+}
 
-      .element{
-            border: 1px dashed;
-            align-content: center;
-            text-align: center;
-            
-        }
-        .m{
-            background: rgb(255, 102, 0);
-         }
-         
-        .t{
-           background: lightblue;
-         }
 
-        .n{
-            background: yellow;
-         }
-        .g{
-            background: lightgreen;
-         }
-        
-      .s{
-         grid-area: 1/2/1/18;
-         /* grid-area: 2/2/2/18; */
-      }
-      .s1{
-         grid-area: 2/ 3/ 2/span 10 ;
-      }
-      .s2{
-         grid-area: 3/ 3/ 3/span 10 ;
-      }
-      .s3{
-         grid-area: 8/1/8/span 2;
-      }
-      .s4{
-         grid-area: 8/17/8/span 2;
-      }
-      .s5{
-         grid-area: 9/1/9/span 2;
-      }
-      .s,.s1,.s2,.s3,.s4,.s5{
-         border: none;
-      }
    </style>
  </head>
  <body>
    <div class="box">
- 
-       <div class="element m">1<br>H</div>
-       <div class="element s"></div>
-  
-       <div class="element m">2<br>He</div>
-      
-   
-    
-       <div class="element m">3<br>Li</div>
-       <div class="element m">4<br>Be</div>
-       <div class="element s1"></div>
-       
-       <div class="element n">5<br>B</div>
-       <div class="element n">6<br>C</div>
-       <div class="element n">7<br>N</div>
-       <div class="element n">8<br>O</div>
-       <div class="element n">9<br>F</div>
-       <div class="element n">10<br>Ne</div>
-     
-       
-     
-   
-  
-       <div class="element m">11<br>Na</div>
-       <div class="element m">12<br>Mg</div>
-       <div class="element s2"></div>
-     
-       <div class="element n">13<br>Al</div>
-       <div class="element n">14<br>Si</div>
-       <div class="element n">15<br>P</div>
-       <div class="element n">16<br>S</div>
-       <div class="element n">17<br>Cl</div>
-       <div class="element n">18<br>Ar</div>
-   
-       
-     
-   
-   
-       <div class="element m">19<br>K</div>
-       <div class="element m">20<br>Ca</div>
-       <div class="element t">21<br>Sc</div>
-       <div class="element t">22<br>Ti</div>
-       <div class=" element t">23<br>V</div>
-       <div class=" element t">24<br>Cr</div>
-       <div class=" element t">25<br>Mn</div>
-       <div class=" element t">26<br>Fe</div>
-       <div class=" element t">27<br>Co</div>
-       <div class=" element t">28<br>Ni</div>
-       <div class=" element t">29<br>Cu</div>
-       <div class=" element t">30<br>Zn</div>
-       <div class=" element  n">31<br>Ga</div>
-       <div class=" element  n">32<br>Ge</div>
-       <div class=" element  n">33<br>As</div>
-       <div class=" element  n">34<br>Se</div>
-       <div class=" element  n">35<br>Br</div>
-       <div class=" element  n">36<br>Kr</div>
-   
-      
-       
-      
-   
-   
-       <div class=" element  m">37<br>Rb</div>
-       <div class=" element  m">38<br>Sr</div>
-       <div class="element  t">39<br>Y</div>
-       <div class="element  t">40<br>Zr</div>
-       <div class="element  t">41<br>Nb</div>
-       <div class="element  t">42<br>Mo</div>
-       <div class="element  t">43<br>Tc</div>
-       <div class="element  t">44<br>Ru</div>
-       <div class="element  t">45<br>Rh</div>
-       <div class="element  t">46<br>Pd</div>
-       <div class="element  t">47<br>Ag</div>
-       <div class="element  t">48<br>Cd</div>
-       <div class="element  n">49<br>In</div>
-       <div class="element  n">50<br>Sn</div>
-       <div class="element  n">51<br>Sb</div>
-       <div class="element  n">52<br>Te</div>
-       <div class="element  n">53<br>I</div>
-       <div class="element  n">54<br>Xe</div>
-      
-       
-    
-    
-       <div class="element  m">55<br>Cs</div>
-       <div class="element  m">56<br>Ba</div>
-       <div class="element t">71<br>Lu</div>
-       <div class="element t">72<br>Hf</div>
-       <div class="element t">73<br>Ta</div>
-       <div class="element t">74<br>W</div>
-       <div class="element t">75<br>Re</div>
-       <div class="element t">76<br>Os</div>
-       <div class="element t">77<br>Ir</div>
-       <div class="element t">78<br>Pt</div>
-       <div class="element t">79<br>Au</div>
-       <div class="element t">80<br>Hg</div>
-       <div class="element n ">81<br>Tl</div>
-       <div class="element n">82<br>Pb</div>
-       <div class="element n">83<br>Bi</div>
-       <div class="element n">84<br>Po</div>
-       <div class="element n">85<br>At</div>
-       <div class="element n">86<br>Rn</div>
-     
-     
-      
-     
-    
-       <div class="element m">87<br>Fr</div>
-       <div class="element m">88<br>Ra</div>
-       <div class="element t">103<br>Lr</div>
-       <div class="element t">104<br>Rf</div>
-       <div class="element t">105<br>Db</div>
-       <div class="element t">106<br>Sg</div>
-       <div class="element t">107<br>Bh</div>
-       <div class="element t">108<br>Hs</div>
-       <div class="element t">109<br>Mt</div>
-       <div class="element t">110<br>Ds</div>
-       <div class="element t">111<br>Rg</div>
-       <div class="element t">112<br>Cn</div>
-       <div class="element n">113<br>Nh</div>
-       <div class="element n">114<br>Fl</div>
-       <div class="element n">115<br>Mc</div>
-       <div class="element n">116<br>Lv</div>
-       <div class="element n">117<br>Ts</div>
-       <div class="element n">118<br>Og</div>
- 
-   
-     
-       
-         <div class="element s3"></div>
-       <div class="element g">57<br>La</div>
-       <div class="element g">58<br>Ce</div>
-       <div class="element g">59<br>Pr</div>
-       <div class="element g">60<br>Nd</div>
-       <div class="element g">61<br>Pm</div>
-       <div class="element g">62<br>Sm</div>
-       <div class="element g">63<br>Eu</div>
-       <div class="element g">64<br>Gd</div>
-       <div class="element g">65<br>Tb</div>
-       <div class="element g">66<br>Dy</div>
-       <div class="element g">67<br>Ho</div>
-       <div class="element g">68<br>Er</div>
-       <div class="element g">69<br>Tm</div>
-       <div class="element g">70<br>Yb</div>
-       <div class="element s4"></div>
-       
-        
-    
-    
-       
-         <div class="element s5"></div>
-       <div class="element g">89<br>Ac</div>
-       <div class="element g">90<br>Th</div>
-       <div class="element g">91<br>Pa</div>
-       <div class="element g">92<br>U</div>
-       <div class="element g">93<br>Np</div>
-       <div class="element g">94<br>Pu</div>
-       <div class="element g">95<br>Am</div>
-       <div class="element g">96<br>Cm</div>
-       <div class="element g">97<br>Bk</div>
-       <div class="element g">98<br>Cf</div>
-       <div class="element g">99<br>Es</div>
-       <div class="element g">100<br>Fm</div>
-       <div class="element g">101<br>Md</div>
-       <div class="element g">102<br>No</div>
-       
-        
-     </div>
+      <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatibus, saepe?</p>
+      <p>hhhh iii fffhhh       hhhhhhhhhhh</p>
+   </div>
  </body>
  </html>
