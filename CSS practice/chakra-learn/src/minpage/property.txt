@@ -1,0 +1,30 @@
+Box - like a div, but with additional features
+  
+Flex
+ -- direction: row | column
+ -- wrap: nowrap | wrap | wrap-reverse
+ -- justifyContent: flex-start | flex-end | center | space-between | space-around | space-evenly
+ -- alignItems: flex-start | flex-end | center | baseline | stretch
+ 
+Grid
+ -- templateColumns: 'repeat(3, 1fr)' | '1fr 2fr' | 'auto auto auto'
+ -- templateRows: 'repeat(3, 1fr)' | '1fr 2fr' | 'auto auto auto'
+ -- gap: '10px' | '20px'
+ -- justifyContent: start | end | center | stretch
+ -- alignItems: start | end | center | stretch 
+
+
+borderWidth="1px"
+borderColor='red.300'
+borderStyle={'dashed'} 
+
+fontFamily={'cursive'} 
+fontSize={26}  
+textShadow={'1px 2px 3px'}
+
+w='500px' 'full'
+minH='300px' minB
+maxH='500px' maxB
+display='none' 'block'
+
+boxShadow={'1px 5px green'} 
