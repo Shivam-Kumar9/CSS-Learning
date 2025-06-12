@@ -13,10 +13,18 @@ Grid
  -- justifyContent: start | end | center | stretch
  -- alignItems: start | end | center | stretch 
 
+filter={'auto'}  -- is necessary to next prop like blur, brightness, contrast, etc. 
+ -blur='5px'
+
+sudoCLASSES -  _ underscore necessary for next prop like hover, active, focus, etc
+ _hover={{bg : 'blue.300'}}
+ _active
 
 borderWidth="1px"
 borderColor='red.300'
 borderStyle={'dashed'} 
+borderRadius={'lg'} 
+overflow={'hidden'}
 
 fontFamily={'cursive'} 
 fontSize={26}  
@@ -28,3 +36,12 @@ maxH='500px' maxB
 display='none' 'block'
 
 boxShadow={'1px 5px green'} 
+
+Heading  -- act as h1 tag
+Footer  -- act as footer tag
+
+
+as={'span'} this make box into that tag
+
+colorScheme={'teal'} -- for button, input,  ❌ des not work in Badge 
+colorPalette={'red'} -- ✅ for Badge, does not work in Button, Input
