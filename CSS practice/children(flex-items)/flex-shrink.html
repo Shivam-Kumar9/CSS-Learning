@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>flex-shrink</title>
+    <style>
+        .parent{font-size: 25px; background-color: yellow;border: 4px dashed black;
+          display: flex; height: 500px; width: auto;padding: 20px;
+          justify-content: center;
+          align-items: center;
+          /* flex-shrink: 1;   it is present by default no need to add it*/ 
+        }
+        .a2{ 
+          flex-shrink:0;
+        }
+
+        .a1,.a2,.a3{border: 2px solid black;text-transform: capitalize; } 
+    </style>
+</head> 
+<body>
+    <div class="parent">
+        <div class="a1">a1 a1 a1 a1</div>
+        <div class="a2">a2 a2 a2 a2</div>
+        <div class="a3">a3 a3 a3 a3</div>
+    </div>
+</body>
+</html>

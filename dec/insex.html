@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .container{
+            border: 1px dashed rgb(128, 128, 16);
+            display: grid;
+            grid-template-columns:  1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr ;
+            gap: 5px;
+            padding: 10px;
+        }
+        .item{
+            border: 1px solid rgb(100, 68, 68);
+        }
+        .item:first-child{
+            background-color: aqua;
+        }
+        .first+.item{
+            background-color: green;
+        }
+        .sec+.third{
+            background: yellow;
+        }
+        .third+.item{
+            background: pink;
+        }
+         .item:last-child{
+            background: #de3a3a;
+         }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="item first"><p>item1</p></div>
+        <div class="item sec"><p>item2</p></div>
+        <div class="item third"><p>item3</p></div>
+        <div class="item"><p>item4</p></div>
+        <div class="item"><p>item5</p></div>
+        <div class="item"><p>item6</p></div>
+    </div>
+</body>
+</html>

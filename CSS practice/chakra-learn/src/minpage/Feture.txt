@@ -1,0 +1,26 @@
+-Theme change   -- ye local sotage me bhe save hota ha agar change karna ha to change from there 
+  
+import { useColorMode}from './components/ui/color-mode'
+function App() {
+  const { colorMode, toggleColorMode } = useColorMode()
+  return (<>
+        
+    <Button onClick={toggleColorMode}>
+              Toggle {colorMode === 'light' ? 'dark' : 'light'}
+     </Button>
+        
+         </>)
+}
+
+--------------------------------
+
+-- image use
+---  ratio tab he work karega jab width decide hoga
+-- objectFit use karne par full screen set hojaega
+-- ratio 2/3 ,3/3, karoge to janoge 
+
+import {  AspectRatio , Image } from '@chakra-ui/react'
+
+   <AspectRatio  maxW='400px' ratio={6/3} >
+      <Image src="https://bit.ly/naruto-sage" alt="naruto" objectFit="cover" />
+    </AspectRatio>

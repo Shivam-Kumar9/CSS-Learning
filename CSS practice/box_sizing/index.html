@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{padding: 0; margin: 0;}
+        .box{
+            height: 100px;
+            padding: 5px;
+            margin: 5px;
+            width: 100px;
+            border: 10px dotted ;
+        }
+        .a{box-sizing: border-box; background: #cb58f5;}
+        .b{box-sizing: content-box; background: #c6ff2a;}
+    </style>
+</head>
+<body>
+    <div class="p">
+        <div class="a box">check</div>
+        <div class="b box">check</div>
+    </div>
+</body>
+</html>
