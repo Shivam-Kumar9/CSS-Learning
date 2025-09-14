@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile Card</title>
+  <style>
+    /* Body ko center align karne ke liye */
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background: #f0f0f0;
+  font-family: Arial, sans-serif;
+}
+
+/* Card styling */
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  width: 250px;
+}
+
+/* Profile Image */
+.card img {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+}
+
+/* Button styling */
+.card button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 20px;
+  background: #007BFF;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.card button:hover {
+  background: #0056b3;
+}
+
+  </style>
+  <!-- <link rel="stylesheet" href="style.css"> -->
+</head>
+<body>
+  <div class="card">
+    <img src="https://via.placeholder.com/150" alt="Profile Picture">
+    <h2>Shivam</h2>
+    <p>Web Developer | React Enthusiast</p>
+    <button>Follow</button>
+  </div>
+</body>
+</html>
