@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background: #222;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .frame {
+            width: 300px;
+            height: 200px;
+            border: 8px solid #fff;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        }
+        .box {
+            width: 40px;
+            height: 40px;
+            background: #4fc3f7;
+            border-radius: 10px;
+            position: absolute;
+            top: 80px;
+            left: 0;
+            animation: moveBox 2s linear infinite alternate;
+        }
+        @keyframes moveBox {
+            0% { left: 0; }
+            100% { left: 260px; }
+        }
+    </style>
+    <title>Document</title>     
+</head>
+<body>
+    <div class="frame">
+        <div class="box"></div>
+    </div>
+</body>
+</html>
