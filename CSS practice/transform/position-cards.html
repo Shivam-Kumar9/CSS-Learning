@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Floating Social Cards</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #1a1a1a, #4a4a4a);
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            position: relative;
+            width: 300px;
+            height: 400px;
+            perspective: 1000px;
+        }
+
+        .card {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.5s;
+        }
+
+        .card:nth-child(1) {
+            transform: translateZ(0) translateY(0);
+            z-index: 3;
+        }
+
+        .card:nth-child(2) {
+            transform: translateZ(-50px) translateY(20px);
+            z-index: 2;
+            background: #f5f5f5;
+        }
+
+        .card:nth-child(3) {
+            transform: translateZ(-100px) translateY(40px);
+            z-index: 1;
+            background: #eeeeee;
+        }
+
+        .container:hover .card:nth-child(1) {
+            transform: translateZ(100px) translateY(-20px);
+        }
+
+        .container:hover .card:nth-child(2) {
+            transform: translateZ(50px) translateY(0);
+        }
+
+        .container:hover .card:nth-child(3) {
+            transform: translateZ(0) translateY(20px);
+        }
+
+        .profile-img {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            overflow: hidden;
+            border: 3px solid #2196f3;
+        }
+
+        .profile-img img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .social-icons {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .icon {
+            position: relative;
+            width: 40px;
+            height: 40px;
+            background: #2196f3;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            transition: transform 0.3s;
+        }
+
+        .icon:hover {
+            transform: translateY(-5px);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        p {
+            text-align: center;
+            color: #666;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="profile-img">
+                <img src="https://source.unsplash.com/random/200x200?face" alt="Profile">
+            </div>
+            <h2>John Doe</h2>
+            <p>UI/UX Designer</p>
+            <p>Creating beautiful and intuitive interfaces that users love.</p>
+            <div class="social-icons">
+                <a href="#" class="icon">in</a>
+                <a href="#" class="icon">f</a>
+                <a href="#" class="icon">t</a>
+            </div>
+        </div>
+        <div class="card">
+            <div class="profile-img">
+                <img src="https://source.unsplash.com/random/200x200?person" alt="Profile">
+            </div>
+            <h2>Jane Smith</h2>
+            <p>Web Developer</p>
+            <p>Building the web of tomorrow with modern technologies.</p>
+            <div class="social-icons">
+                <a href="#" class="icon">in</a>
+                <a href="#" class="icon">f</a>
+                <a href="#" class="icon">t</a>
+            </div>
+        </div>
+        <div class="card">
+            <div class="profile-img">
+                <img src="https://source.unsplash.com/random/200x200?portrait" alt="Profile">
+            </div>
+            <h2>Mike Johnson</h2>
+            <p>Product Designer</p>
+            <p>Transforming ideas into meaningful product experiences.</p>
+            <div class="social-icons">
+                <a href="#" class="icon">in</a>
+                <a href="#" class="icon">f</a>
+                <a href="#" class="icon">t</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
