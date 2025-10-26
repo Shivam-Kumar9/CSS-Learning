@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Dashboard</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #4f46e5;
+            --secondary: #818cf8;
+            --success: #22c55e;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #1f2937;
+            --light: #f3f4f6;
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+                          0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: #f8fafc;
+            color: var(--dark);
+            line-height: 1.5;
+        }
+
+        /* Layout Container */
+        .dashboard {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            flex: 0 0 250px;
+            background-color: white;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            border-right: 1px solid #e5e7eb;
+        }
+
+        .sidebar-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 2rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            color: #4b5563;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .nav-item:hover {
+            background-color: var(--light);
+            color: var(--primary);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            max-width: 1400px;
+        }
+
+        /* Header Section */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            box-shadow: var(--card-shadow);
+            flex: 0 1 300px;
+        }
+
+        .search-bar input {
+            border: none;
+            outline: none;
+            width: 100%;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            flex: 1 1 250px;
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        /* Chart Section */
+        .charts-container {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .chart-card {
+            flex: 1 1 400px;
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        /* Activity Feed */
+        .activity-feed {
+            flex: 1;
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        .feed-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .feed-icon {
+            flex: 0 0 40px;
+            height: 40px;
+            background-color: var(--light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feed-content {
+            flex: 1;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .dashboard {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                flex: 0 0 auto;
+                border-right: none;
+                border-bottom: 1px solid #e5e7eb;
+            }
+
+            .main-content {
+                padding: 1rem;
+            }
+
+            .stat-card {
+                flex: 1 1 100%;
+            }
+
+            .chart-card {
+                flex: 1 1 100%;
+            }
+        }
+
+        /* Interactive Elements */
+        .button {
+            padding: 0.5rem 1rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .button:hover {
+            background-color: var(--secondary);
+        }
+
+        /* Progress Bars */
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: var(--light);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        /* Status Indicators */
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+        }
+
+        .status.success {
+            background-color: #dcfce7;
+            color: var(--success);
+        }
+
+        .status.warning {
+            background-color: #fef3c7;
+            color: var(--warning);
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">Dashboard</div>
+            <a href="#" class="nav-item">📊 Overview</a>
+            <a href="#" class="nav-item">📈 Analytics</a>
+            <a href="#" class="nav-item">👥 Customers</a>
+            <a href="#" class="nav-item">📦 Products</a>
+            <a href="#" class="nav-item">💰 Finance</a>
+            <a href="#" class="nav-item">⚙️ Settings</a>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <h1>Dashboard Overview</h1>
+                <div class="search-bar">
+                    <span>🔍</span>
+                    <input type="text" placeholder="Search...">
+                </div>
+            </header>
+
+            <!-- Stats Grid -->
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <h3>Total Revenue</h3>
+                        <span>📈</span>
+                    </div>
+                    <div class="stat-value">$84,254</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 75%"></div>
+                    </div>
+                    <div class="status success">+12.5% from last month</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <h3>Active Users</h3>
+                        <span>👥</span>
+                    </div>
+                    <div class="stat-value">2,543</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 65%"></div>
+                    </div>
+                    <div class="status warning">+5.2% from last month</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <h3>Conversion Rate</h3>
+                        <span>🎯</span>
+                    </div>
+                    <div class="stat-value">3.6%</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 85%"></div>
+                    </div>
+                    <div class="status success">+8.4% from last month</div>
+                </div>
+            </section>
+
+            <!-- Charts -->
+            <section class="charts-container">
+                <div class="chart-card">
+                    <h3>Sales Overview</h3>
+                    <!-- Placeholder for chart -->
+                    <div style="height: 200px; background: var(--light); border-radius: 0.5rem; margin-top: 1rem;"></div>
+                </div>
+                <div class="chart-card">
+                    <h3>Customer Growth</h3>
+                    <!-- Placeholder for chart -->
+                    <div style="height: 200px; background: var(--light); border-radius: 0.5rem; margin-top: 1rem;"></div>
+                </div>
+            </section>
+
+            <!-- Activity Feed -->
+            <section class="activity-feed">
+                <h3>Recent Activity</h3>
+                <div class="feed-item">
+                    <div class="feed-icon">💰</div>
+                    <div class="feed-content">
+                        <strong>New Sale</strong>
+                        <p>John Doe purchased Premium Plan</p>
+                    </div>
+                    <span>2m ago</span>
+                </div>
+                <div class="feed-item">
+                    <div class="feed-icon">👤</div>
+                    <div class="feed-content">
+                        <strong>New User</strong>
+                        <p>Sarah Smith joined the platform</p>
+                    </div>
+                    <span>15m ago</span>
+                </div>
+                <div class="feed-item">
+                    <div class="feed-icon">📊</div>
+                    <div class="feed-content">
+                        <strong>Report Generated</strong>
+                        <p>Monthly analytics report is ready</p>
+                    </div>
+                    <span>1h ago</span>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
