@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Pricing Cards</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6d28d9;
+            --secondary: #7c3aed;
+            --accent: #4c1d95;
+            --background: #f5f3ff;
+            --text: #1f2937;
+            --light: #f9fafb;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: var(--background);
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            padding: 2rem;
+        }
+
+        .pricing-container {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 1200px;
+            perspective: 1000px;
+        }
+
+        .pricing-card {
+            flex: 1 1 300px;
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(109, 40, 217, 0.1));
+            transform: translateY(100%);
+            transition: transform 0.6s ease;
+        }
+
+        .pricing-card:hover::before {
+            transform: translateY(0);
+        }
+
+        .popular {
+            position: absolute;
+            top: 1rem;
+            right: -3rem;
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem 4rem;
+            transform: rotate(45deg);
+            font-size: 0.875rem;
+        }
+
+        .plan-name {
+            font-size: 1.5rem;
+            color: var(--text);
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .plan-price {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.25rem;
+        }
+
+        .currency {
+            font-size: 1.5rem;
+            font-weight: normal;
+        }
+
+        .period {
+            font-size: 1rem;
+            color: #6b7280;
+            align-self: flex-end;
+        }
+
+        .features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            color: #4b5563;
+        }
+
+        .feature-item::before {
+            content: '✓';
+            display: inline-block;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .cta-button {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            background: var(--primary);
+            color: white;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .cta-button::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.5s ease;
+        }
+
+        .cta-button:hover::after {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .highlight {
+            position: relative;
+        }
+
+        .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .pricing-card:hover .highlight::after {
+            transform: scaleX(1);
+        }
+
+        @media (max-width: 768px) {
+            .pricing-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .pricing-card {
+                width: 100%;
+                max-width: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="pricing-container">
+        <div class="pricing-card">
+            <h2 class="plan-name">Basic <span class="highlight">Plan</span></h2>
+            <div class="plan-price">
+                <span class="currency">$</span>
+                19
+                <span class="period">/month</span>
+            </div>
+            <ul class="features">
+                <li class="feature-item">5GB Storage Space</li>
+                <li class="feature-item">10 Projects</li>
+                <li class="feature-item">Basic Analytics</li>
+                <li class="feature-item">24/7 Support</li>
+            </ul>
+            <button class="cta-button">Get Started</button>
+        </div>
+
+        <div class="pricing-card">
+            <div class="popular">Popular</div>
+            <h2 class="plan-name">Pro <span class="highlight">Plan</span></h2>
+            <div class="plan-price">
+                <span class="currency">$</span>
+                49
+                <span class="period">/month</span>
+            </div>
+            <ul class="features">
+                <li class="feature-item">50GB Storage Space</li>
+                <li class="feature-item">Unlimited Projects</li>
+                <li class="feature-item">Advanced Analytics</li>
+                <li class="feature-item">24/7 Priority Support</li>
+                <li class="feature-item">Custom Domain</li>
+            </ul>
+            <button class="cta-button">Get Started</button>
+        </div>
+
+        <div class="pricing-card">
+            <h2 class="plan-name">Enterprise <span class="highlight">Plan</span></h2>
+            <div class="plan-price">
+                <span class="currency">$</span>
+                99
+                <span class="period">/month</span>
+            </div>
+            <ul class="features">
+                <li class="feature-item">500GB Storage Space</li>
+                <li class="feature-item">Unlimited Projects</li>
+                <li class="feature-item">Premium Analytics</li>
+                <li class="feature-item">24/7 VIP Support</li>
+                <li class="feature-item">Multiple Domains</li>
+                <li class="feature-item">Advanced Security</li>
+            </ul>
+            <button class="cta-button">Get Started</button>
+        </div>
+    </div>
+</body>
+</html>

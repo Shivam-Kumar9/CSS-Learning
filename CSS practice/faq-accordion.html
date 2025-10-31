@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FAQ — Accordion (Small Project)</title>
+  <style>
+    :root{
+      --bg:#f6f8fb;
+      --card:#ffffff;
+      --accent:#6366f1;
+      --muted:#6b7280;
+      --radius:12px;
+      --shadow:0 8px 30px rgba(16,24,40,0.06);
+      --gap:1rem;
+      font-family: Inter, "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial;
+    }
+    *{box-sizing:border-box}
+    body{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--bg);padding:2rem}
+
+    .wrap{width:100%;max-width:880px}
+    .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+    .title{font-size:1.25rem;font-weight:600;color:#111827}
+    .subtitle{color:var(--muted);font-size:0.95rem}
+
+    .accordion{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+    .item{border-top:1px solid rgba(15,23,42,0.04);}
+    .item:first-child{border-top:0}
+
+    /* header button */
+    .q{
+      width:100%;display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;gap:0.75rem;background:transparent;border:0;cursor:pointer;text-align:left;
+      font-size:1rem;color:#0f172a;
+    }
+
+    .meta{display:flex;flex-direction:column;align-items:flex-start;gap:4px}
+    .q .muted{color:var(--muted);font-size:0.9rem}
+
+    /* chevron */
+    .chev{width:36px;height:36px;border-radius:9px;display:inline-grid;place-items:center;background:transparent;transition:transform .28s ease,color .28s}
+    .chev svg{display:block;width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2}
+
+    /* panel */
+    .panel{padding:0 1.5rem 1.25rem 1.5rem;color:var(--muted);font-size:0.95rem;line-height:1.6;max-height:0;overflow:hidden;transition:max-height .32s ease,padding .32s ease}
+
+    /* when open (aria-expanded) */
+    .q[aria-expanded="true"] + .panel{max-height:260px;padding-top:.75rem}
+    .q[aria-expanded="true"] .chev{transform:rotate(180deg);background:var(--accent);color:#fff}
+
+    /* subtle focus styles */
+    .q:focus{outline:3px solid rgba(99,102,241,0.12);outline-offset:4px;border-radius:8px}
+
+    /* small screens */
+    @media (max-width:540px){.title{font-size:1.05rem}.q{padding:0.9rem 1rem}.panel{padding-left:1rem;padding-right:1rem}}
+
+    /* utility */
+    .badge{background:linear-gradient(90deg,var(--accent),#8b5cf6);color:#fff;padding:6px 10px;border-radius:999px;font-size:0.8rem}
+  </style>
+</head>
+<body>
+  <main class="wrap" aria-labelledby="faq-title">
+    <div class="header">
+      <div>
+        <div id="faq-title" class="title">Frequently Asked Questions</div>
+        <div class="subtitle">Common questions about our product and policies</div>
+      </div>
+      <div class="badge">Live</div>
+    </div>
+
+    <section class="accordion" id="faq" role="region" aria-label="FAQ Accordion">
+
+      <div class="item">
+        <button class="q" aria-expanded="false" aria-controls="panel1" id="q1">
+          <span class="meta">
+            <strong>How do I reset my password?</strong>
+            <span class="muted">Steps to recover your account quickly</span>
+          </span>
+          <span class="chev" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </button>
+        <div id="panel1" class="panel" role="region" aria-labelledby="q1">
+          To reset your password go to your profile → Security → Change Password. If you cannot log in, use the "Forgot password" link on the sign-in page to receive a reset link by email.
+        </div>
+      </div>
+
+      <div class="item">
+        <button class="q" aria-expanded="false" aria-controls="panel2" id="q2">
+          <span class="meta">
+            <strong>What is the refund policy?</strong>
+            <span class="muted">Information about refunds and cancellations</span>
+          </span>
+          <span class="chev" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </button>
+        <div id="panel2" class="panel" role="region" aria-labelledby="q2">
+          We offer a 30-day money back guarantee on all paid plans. To request a refund, open a support ticket and include your account email and order number.
+        </div>
+      </div>
+
+      <div class="item">
+        <button class="q" aria-expanded="false" aria-controls="panel3" id="q3">
+          <span class="meta">
+            <strong>Can I change my plan later?</strong>
+            <span class="muted">Upgrades, downgrades and billing cycles</span>
+          </span>
+          <span class="chev" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </button>
+        <div id="panel3" class="panel" role="region" aria-labelledby="q3">
+          Yes—you can upgrade or downgrade anytime from the Billing page. Changes take effect immediately and charges are prorated.
+        </div>
+      </div>
+
+      <div class="item">
+        <button class="q" aria-expanded="false" aria-controls="panel4" id="q4">
+          <span class="meta">
+            <strong>Is there an API?</strong>
+            <span class="muted">Developer access and documentation</span>
+          </span>
+          <span class="chev" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </button>
+        <div id="panel4" class="panel" role="region" aria-labelledby="q4">
+          Yes—we provide a REST API. Visit /docs for endpoints, authentication details, and examples. API keys are available in the developer section of your account.
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <script>
+    // Small enhancement: keyboard accessibility and single-open behavior
+    (function(){
+      const accordion = document.getElementById('faq');
+      const buttons = accordion.querySelectorAll('.q');
+
+      // Toggle function — closes others when opening one (accordion behavior)
+      function toggle(btn){
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        // Close all
+        buttons.forEach(b => b.setAttribute('aria-expanded','false'));
+        if(!expanded){
+          btn.setAttribute('aria-expanded','true');
+          // move keyboard focus to panel for screen readers if needed
+          const panel = document.getElementById(btn.getAttribute('aria-controls'));
+          panel && panel.scrollIntoView({behavior:'smooth',block:'nearest'});
+        }
+      }
+
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => toggle(btn));
+        btn.addEventListener('keydown', (e) => {
+          // support Enter/Space, ArrowUp/Down to navigate
+          if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggle(btn); }
+          if(e.key === 'ArrowDown' || e.key === 'ArrowUp'){
+            e.preventDefault();
+            const idx = Array.prototype.indexOf.call(buttons, btn);
+            const next = e.key === 'ArrowDown' ? buttons[(idx+1)%buttons.length] : buttons[(idx-1+buttons.length)%buttons.length];
+            next.focus();
+          }
+        });
+      });
+
+      // Optionally open the first item by default
+      if(buttons.length) buttons[0].setAttribute('aria-expanded','true');
+    })();
+  </script>
+</body>
+</html>
