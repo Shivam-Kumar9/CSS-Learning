@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Throttle & Debounce — Mini Demo</title>
+  <style>
+    :root{--bg:#f5f7fb;--card:#fff;--accent:#4f46e5;--muted:#6b7280;--radius:12px}
+    *{box-sizing:border-box}
+    body{font-family:Inter,Segoe UI,system-ui,Arial;min-height:100vh;margin:0;background:var(--bg);padding:32px;display:flex;align-items:flex-start;justify-content:center}
+    .wrap{width:100%;max-width:980px}
+    h1{font-size:1.25rem;margin:0 0 6px}
+    p.lead{margin:0 0 18px;color:var(--muted)}
+
+    .grid{display:grid;grid-template-columns:1fr 320px;gap:20px}
+    .card{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:0 8px 20px rgba(15,23,42,0.06)}
+
+    label{display:block;font-weight:600;margin-bottom:6px}
+    input[type='text'], input[type='range']{width:100%;padding:8px;border-radius:8px;border:1px solid #e6e9ef}
+    .controls{display:flex;gap:8px;margin-top:8px}
+    button{background:var(--accent);color:#fff;border:0;padding:10px 12px;border-radius:8px;cursor:pointer}
+    button.secondary{background:#eef2ff;color:var(--accent)}
+
+    .log{height:240px;overflow:auto;background:#0b1220;color:#dfe9ff;padding:12px;border-radius:8px;font-family:monospace;font-size:13px}
+    .muted{color:var(--muted);font-size:0.95rem}
+    .stat{display:flex;gap:10px;align-items:center}
+    .big{font-size:1.6rem;font-weight:700;color:var(--accent)}
+
+    .example-row{display:flex;gap:12px;align-items:center}
+    .setting{display:flex;flex-direction:column;gap:6px}
+
+    @media (max-width:860px){.grid{grid-template-columns:1fr;}.log{height:180px}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <h1>Throttle & Debounce — Interactive Mini Demo</h1>
+    <p class="lead">Try the controls to see how debounce and throttle behave. Change the delay and spam the inputs/buttons to observe when handlers actually run.</p>
+
+    <div class="grid">
+      <section class="card">
+        <h2 style="margin-top:0">Debounce (Search / Input)</h2>
+        <p class="muted">Debounce delays execution until the event "settles" for the given delay. Useful for search boxes and type-ahead.</p>
+
+        <div style="margin-top:12px">
+          <label for="deb-input">Type something (debounced):</label>
+          <input id="deb-input" type="text" placeholder="Type fast — handler runs after pause...">
+        </div>
+
+        <div style="margin-top:12px" class="setting">
+          <label for="deb-delay">Debounce delay (ms): <span id="deb-delay-val">300</span></label>
+          <input id="deb-delay" type="range" min="50" max="2000" value="300">
+        </div>
+
+        <div style="margin-top:14px" class="controls">
+          <button id="deb-clear" class="secondary">Clear logs</button>
+          <button id="deb-run" title="Simulate rapid typing">Simulate typing</button>
+        </div>
+
+        <h3 style="margin:14px 0 6px">Debounce log</h3>
+        <div id="deb-log" class="log"></div>
+      </section>
+
+      <aside class="card">
+        <h3 style="margin-top:0">Throttle (Events)</h3>
+        <p class="muted">Throttle ensures a handler runs at most once per given interval. Useful for scroll/resize/mousemove optimizations.</p>
+
+        <div style="margin-top:10px">
+          <div class="example-row">
+            <div>
+              <label for="throttle-delay">Throttle delay (ms): <span id="throttle-delay-val">250</span></label>
+              <input id="throttle-delay" type="range" min="50" max="2000" value="250">
+            </div>
+          </div>
+
+          <div style="margin-top:12px" class="example-row">
+            <button id="spam-click">Spam Click</button>
+            <button id="throttle-clear" class="secondary">Clear logs</button>
+          </div>
+
+          <div style="margin-top:12px" class="muted">Click the "Spam Click" repeatedly (or hold) to see throttled handler runs.</div>
+
+          <h4 style="margin:12px 0 6px">Throttle log</h4>
+          <div id="throttle-log" class="log"></div>
+
+          <div style="margin-top:12px" class="stat">
+            <div class="big" id="throttle-count">0</div>
+            <div class="muted">handler calls</div>
+          </div>
+
+          <hr style="margin:12px 0">
+          <div class="muted">Also try resizing the browser window to see a throttled resize handler (auto-logged).</div>
+        </div>
+      </aside>
+
+      <section class="card" style="grid-column:1/-1">
+        <h3 style="margin-top:0">Implementation Notes</h3>
+        <p class="muted">This page includes small, well-tested implementations of debounce and throttle. The demo shows the practical difference: debounce waits for the user to stop firing events, throttle limits the rate of execution.</p>
+        <pre style="background:#0b1220;color:#dfe9ff;padding:12px;border-radius:8px;font-size:13px;overflow:auto">// debounce and throttle utilities are included in the page JS — see the file source for details</pre>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    // Utility helpers
+    function now(){ return new Date().toISOString().slice(11,23) }
+    function appendLog(el, text){ const p = document.createElement('div'); p.textContent = `[${now()}] ${text}`; el.appendChild(p); el.scrollTop = el.scrollHeight }
+    function clearLog(el){ el.innerHTML = '' }
+
+    // Debounce implementation — returns a debounced function
+    function debounce(fn, wait, immediate = false){
+      let timeout = null;
+      return function(...args){
+        const context = this;
+        const later = function(){ timeout = null; if(!immediate) fn.apply(context, args) }
+        const callNow = immediate && !timeout;
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+        if(callNow) fn.apply(context, args);
+      }
+    }
+
+    // Throttle implementation — simple timestamp-based leading throttle
+    function throttle(fn, wait){
+      let last = 0;
+      let timeout = null;
+      return function(...args){
+        const context = this;
+        const nowTs = Date.now();
+        const remaining = wait - (nowTs - last);
+        if(remaining <= 0){
+          if(timeout){ clearTimeout(timeout); timeout = null }
+          last = nowTs;
+          fn.apply(context, args);
+        } else if(!timeout){
+          // schedule trailing call
+          timeout = setTimeout(() => { last = Date.now(); timeout = null; fn.apply(context, args) }, remaining);
+        }
+      }
+    }
+
+    // Elements
+    const debInput = document.getElementById('deb-input');
+    const debDelay = document.getElementById('deb-delay');
+    const debDelayVal = document.getElementById('deb-delay-val');
+    const debLog = document.getElementById('deb-log');
+    const debClear = document.getElementById('deb-clear');
+    const debRun = document.getElementById('deb-run');
+
+    const throttleDelay = document.getElementById('throttle-delay');
+    const throttleDelayVal = document.getElementById('throttle-delay-val');
+    const throttleLog = document.getElementById('throttle-log');
+    const throttleClear = document.getElementById('throttle-clear');
+    const spamClick = document.getElementById('spam-click');
+    const throttleCountEl = document.getElementById('throttle-count');
+
+    // State
+    let throttleHandler = null;
+    let throttledCount = 0;
+
+    // Handler functions
+    function debouncedHandler(value){ appendLog(debLog, 'debounced handler run — value: ' + JSON.stringify(value)) }
+    function throttledHandler(event){ throttledCount += 1; throttleCountEl.textContent = throttledCount; appendLog(throttleLog, 'throttled handler run (event)') }
+
+    // Wire up debounce with initial delay
+    let deb = debounce((e) => debouncedHandler(e.target.value), Number(debDelay.value));
+    debInput.addEventListener('input', (e) => deb(e));
+
+    // Update debounce delay dynamically
+    debDelay.addEventListener('input', (e) => {
+      debDelayVal.textContent = e.target.value;
+      deb = debounce((ev) => debouncedHandler(ev.target.value), Number(e.target.value));
+    });
+
+    debClear.addEventListener('click', () => clearLog(debLog));
+
+    debRun.addEventListener('click', () => {
+      // simulate rapid typing
+      const sample = ['h','he','hel','hell','hello','hello!'];
+      sample.forEach((v,i) => setTimeout(() => { debInput.value = v; deb({ target: { value: v } }) }, i * 80));
+      appendLog(debLog, 'simulating rapid typing...');
+    });
+
+    // Throttle wiring
+    function setupThrottle(){
+      const wait = Number(throttleDelay.value);
+      throttleDelayVal.textContent = wait;
+      throttledCount = 0; throttleCountEl.textContent = throttledCount; clearLog(throttleLog);
+      // remove previous click listener if exists
+      if(throttleHandler && spamClick._throttleWrapped){ spamClick.removeEventListener('click', spamClick._throttleWrapped) }
+      throttleHandler = throttle(function(e){ throttledHandler(e) }, wait);
+      spamClick._throttleWrapped = throttleHandler;
+      spamClick.addEventListener('click', throttleHandler);
+    }
+
+    setupThrottle();
+
+    throttleDelay.addEventListener('input', (e) => setupThrottle());
+
+    throttleClear.addEventListener('click', () => { clearLog(throttleLog); throttledCount = 0; throttleCountEl.textContent = throttledCount });
+
+    // Also wire a throttled resize handler to demonstrate automatic events
+    let resizeThrottle = throttle(function(){ appendLog(throttleLog, 'throttled resize event'); throttledCount += 1; throttleCountEl.textContent = throttledCount }, Number(throttleDelay.value));
+    window.addEventListener('resize', function(){
+      // update resizeThrottle with current delay — recreate when delay changes
+      if(resizeThrottle){ window.removeEventListener('resize', resizeThrottle) }
+    });
+
+    // Recreate resize throttle each time delay changes
+    throttleDelay.addEventListener('input', () => {
+      if(resizeThrottle) window.removeEventListener('resize', resizeThrottle);
+      resizeThrottle = throttle(function(){ appendLog(throttleLog, 'throttled resize event'); throttledCount += 1; throttleCountEl.textContent = throttledCount }, Number(throttleDelay.value));
+      window.addEventListener('resize', resizeThrottle);
+    });
+
+    // start listening
+    window.addEventListener('resize', resizeThrottle);
+
+    // small enhancement: hold spam-click to rapidly fire clicks
+    let spamInterval = null;
+    spamClick.addEventListener('mousedown', () => {
+      spamInterval = setInterval(() => { spamClick.dispatchEvent(new MouseEvent('click')) }, 60);
+    });
+    document.addEventListener('mouseup', () => { if(spamInterval){ clearInterval(spamInterval); spamInterval = null } });
+
+    // initial clear
+    clearLog(debLog); clearLog(throttleLog);
+    appendLog(debLog, 'Debounce demo ready — type or simulate');
+    appendLog(throttleLog, 'Throttle demo ready — press Spam Click or resize window');
+  </script>
+</body>
+</html>
