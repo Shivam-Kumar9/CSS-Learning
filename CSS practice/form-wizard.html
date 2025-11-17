@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Step Form Wizard</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --success: #22c55e;
+            --danger: #ef4444;
+            --gray: #6b7280;
+            --light: #f3f4f6;
+            --card: #ffffff;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #f6f7ff 0%, #ffffff 100%);
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 2rem;
+            color: #1f2937;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .wizard {
+            background: var(--card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        /* Progress Bar */
+        .progress {
+            padding: 2rem 2rem 0;
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .progress-steps::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--light);
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+
+        .progress-bar {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            height: 2px;
+            background: var(--primary);
+            transform: translateY(-50%);
+            transition: width 0.3s ease;
+            z-index: 2;
+        }
+
+        .step {
+            position: relative;
+            z-index: 3;
+        }
+
+        .step-circle {
+            width: 40px;
+            height: 40px;
+            background: var(--light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .step.active .step-circle {
+            background: var(--primary);
+            color: white;
+        }
+
+        .step.complete .step-circle {
+            background: var(--success);
+            color: white;
+        }
+
+        .step-label {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--gray);
+            white-space: nowrap;
+        }
+
+        /* Form Content */
+        .form-content {
+            padding: 2rem;
+        }
+
+        .step-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .step-content.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .error input {
+            border-color: var(--danger);
+        }
+
+        .error-message {
+            color: var(--danger);
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        .error .error-message {
+            display: block;
+        }
+
+        /* Form Navigation */
+        .form-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background: var(--light);
+            color: var(--gray);
+        }
+
+        .btn-secondary:hover {
+            background: #e5e7eb;
+        }
+
+        /* Success State */
+        .success-message {
+            text-align: center;
+            padding: 2rem;
+            display: none;
+        }
+
+        .success-message.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .success-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--success);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 2rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 640px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .progress, .form-content {
+                padding: 1.5rem 1.5rem 0;
+            }
+
+            .step-circle {
+                width: 32px;
+                height: 32px;
+                font-size: 0.875rem;
+            }
+
+            .step-label {
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="wizard">
+            <!-- Progress Bar -->
+            <div class="progress">
+                <div class="progress-steps">
+                    <div class="progress-bar" style="width: 0%"></div>
+                    <div class="step active">
+                        <div class="step-circle">1</div>
+                        <div class="step-label">Personal</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-circle">2</div>
+                        <div class="step-label">Contact</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-circle">3</div>
+                        <div class="step-label">Account</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Steps -->
+            <form id="wizardForm" novalidate>
+                <div class="form-content">
+                    <!-- Step 1: Personal Information -->
+                    <div class="step-content active" data-step="1">
+                        <h2>Personal Information</h2>
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" name="firstName" required>
+                            <div class="error-message">Please enter your first name</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" name="lastName" required>
+                            <div class="error-message">Please enter your last name</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="birthdate">Date of Birth</label>
+                            <input type="date" id="birthdate" name="birthdate" required>
+                            <div class="error-message">Please enter your date of birth</div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Contact Information -->
+                    <div class="step-content" data-step="2">
+                        <h2>Contact Information</h2>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required>
+                            <div class="error-message">Please enter a valid email address</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" required>
+                            <div class="error-message">Please enter your phone number</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="country">Country</label>
+                            <select id="country" name="country" required>
+                                <option value="">Select a country</option>
+                                <option value="us">United States</option>
+                                <option value="uk">United Kingdom</option>
+                                <option value="ca">Canada</option>
+                                <option value="au">Australia</option>
+                            </select>
+                            <div class="error-message">Please select your country</div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Account Setup -->
+                    <div class="step-content" data-step="3">
+                        <h2>Account Setup</h2>
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" id="username" name="username" required>
+                            <div class="error-message">Please choose a username</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" required>
+                            <div class="error-message">Password must be at least 8 characters</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm Password</label>
+                            <input type="password" id="confirmPassword" name="confirmPassword" required>
+                            <div class="error-message">Passwords do not match</div>
+                        </div>
+                    </div>
+
+                    <!-- Success Message -->
+                    <div class="success-message">
+                        <div class="success-icon">✓</div>
+                        <h2>Registration Complete!</h2>
+                        <p>Thank you for registering. Your account has been created successfully.</p>
+                    </div>
+
+                    <!-- Navigation Buttons -->
+                    <div class="form-nav">
+                        <button type="button" class="btn btn-secondary" id="prevBtn" style="display: none">Previous</button>
+                        <button type="button" class="btn btn-primary" id="nextBtn">Next</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('wizardForm');
+            const steps = Array.from(document.querySelectorAll('.step-content'));
+            const progressSteps = Array.from(document.querySelectorAll('.step'));
+            const progressBar = document.querySelector('.progress-bar');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            let currentStep = 0;
+
+            // Update progress bar and steps
+            function updateProgress() {
+                const progress = ((currentStep) / (steps.length - 1)) * 100;
+                progressBar.style.width = `${progress}%`;
+                
+                progressSteps.forEach((step, idx) => {
+                    if (idx < currentStep) {
+                        step.classList.add('complete');
+                        step.classList.remove('active');
+                    } else if (idx === currentStep) {
+                        step.classList.add('active');
+                        step.classList.remove('complete');
+                    } else {
+                        step.classList.remove('active', 'complete');
+                    }
+                });
+            }
+
+            // Validate current step
+            function validateStep(step) {
+                const inputs = steps[step].querySelectorAll('input, select');
+                let isValid = true;
+
+                inputs.forEach(input => {
+                    const group = input.closest('.form-group');
+                    group.classList.remove('error');
+
+                    if (input.hasAttribute('required') && !input.value) {
+                        group.classList.add('error');
+                        isValid = false;
+                    }
+
+                    if (input.type === 'email' && input.value && !input.value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+                        group.classList.add('error');
+                        isValid = false;
+                    }
+
+                    if (input.id === 'password' && input.value.length < 8) {
+                        group.classList.add('error');
+                        isValid = false;
+                    }
+
+                    if (input.id === 'confirmPassword' && input.value !== document.getElementById('password').value) {
+                        group.classList.add('error');
+                        isValid = false;
+                    }
+                });
+
+                return isValid;
+            }
+
+            // Navigation handlers
+            function showStep(step) {
+                steps.forEach(s => s.classList.remove('active'));
+                steps[step].classList.add('active');
+                
+                // Update buttons
+                prevBtn.style.display = step === 0 ? 'none' : 'block';
+                nextBtn.textContent = step === steps.length - 1 ? 'Submit' : 'Next';
+                
+                updateProgress();
+            }
+
+            function nextStep() {
+                if (!validateStep(currentStep)) return;
+
+                if (currentStep < steps.length - 1) {
+                    currentStep++;
+                    showStep(currentStep);
+                } else {
+                    // Form completion
+                    document.querySelector('.progress').style.display = 'none';
+                    steps.forEach(s => s.style.display = 'none');
+                    document.querySelector('.form-nav').style.display = 'none';
+                    document.querySelector('.success-message').classList.add('active');
+                }
+            }
+
+            function prevStep() {
+                if (currentStep > 0) {
+                    currentStep--;
+                    showStep(currentStep);
+                }
+            }
+
+            // Event listeners
+            nextBtn.addEventListener('click', nextStep);
+            prevBtn.addEventListener('click', prevStep);
+
+            // Initialize form
+            showStep(currentStep);
+
+            // Prevent form submission
+            form.addEventListener('submit', (e) => e.preventDefault());
+        });
+    </script>
+</body>
+</html>
