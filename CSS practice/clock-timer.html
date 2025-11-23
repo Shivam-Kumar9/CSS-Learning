@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Live Clock + Timer</title>
+  <style>
+    :root{
+      --bg: #f6f7fb;
+      --card: #fff;
+      --muted: #6b7280;
+      --accent: #6366f1;
+      --accent-2: #8b5cf6;
+      --glass: rgba(255,255,255,0.6);
+    }
+
+    .dark{
+      --bg: #0b1220;
+      --card: #071028;
+      --muted: #9aa6bf;
+      --accent: #60a5fa;
+      --accent-2: #93c5fd;
+      --glass: rgba(255,255,255,0.03);
+      color: #e6eefb;
+    }
+
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;background:linear-gradient(180deg,var(--bg),#ffffff);display:flex;align-items:center;justify-content:center;padding:24px;font-family:Inter,Segoe UI,system-ui,Arial;color:#0b1220}
+    .dark body{color:var(--muted)}
+
+    .wrap{width:100%;max-width:980px}
+    .card{background:var(--card);border-radius:14px;padding:20px;box-shadow:0 10px 30px rgba(2,6,23,0.08);display:grid;grid-template-columns:360px 1fr;gap:20px;align-items:start}
+
+    /* Clock area */
+    .clock-area{display:flex;flex-direction:column;align-items:center;gap:14px}
+    .analog{width:260px;height:260px;border-radius:50%;background:linear-gradient(180deg,var(--glass),transparent);display:grid;place-items:center;position:relative;border:8px solid rgba(0,0,0,0.04)}
+    .face{width:86%;height:86%;border-radius:50%;position:relative;display:grid;place-items:center}
+    .hand{position:absolute;left:50%;top:50%;transform-origin:50% 100%;transform:translate(-50%,-100%) rotate(0deg);}
+    .hour{width:8px;height:60px;background:var(--accent);border-radius:6px;z-index:3}
+    .minute{width:6px;height:86px;background:var(--accent-2);border-radius:6px;z-index:2}
+    .second{width:2px;height:96px;background:#ef4444;border-radius:6px;z-index:1}
+    .center-dot{width:12px;height:12px;background:var(--accent);border-radius:50%;position:absolute}
+
+    .digital{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:transparent;border-radius:8px;padding:8px 12px}
+    .time-large{font-size:1.6rem;font-weight:700}
+    .date-small{color:var(--muted);font-size:0.95rem}
+
+    /* Timer area */
+    .controls{display:flex;flex-direction:column;gap:12px}
+    .timer-display{background:linear-gradient(180deg,rgba(99,102,241,0.06),transparent);padding:18px;border-radius:10px;display:flex;align-items:center;justify-content:space-between}
+    .timer-big{font-size:2.2rem;font-weight:700}
+    .muted{color:var(--muted)}
+
+    .row{display:flex;gap:8px;align-items:center}
+    input[type=number]{width:100px;padding:8px;border-radius:8px;border:1px solid #e6e9ef}
+    button{padding:10px 14px;border-radius:8px;border:0;background:var(--accent);color:white;cursor:pointer}
+    button.secondary{background:#eef2ff;color:var(--accent)}
+
+    .footer{font-size:0.9rem;color:var(--muted);margin-top:12px}
+
+    @media(max-width:900px){.card{grid-template-columns:1fr;}.analog{width:220px;height:220px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+      <div>
+        <h1 style="margin:0;font-size:1.1rem">Live Clock & Timer</h1>
+        <div class="muted">Analog + Digital clock, countdown timer and theme toggle</div>
+      </div>
+      <div>
+        <button id="themeBtn" class="secondary" title="Toggle theme">Toggle Theme</button>
+      </div>
+    </div>
+
+    <div class="card" id="card">
+      <section class="clock-area">
+        <div class="analog" aria-hidden="true">
+          <div class="face" id="face">
+            <div class="hand hour" id="hourHand"></div>
+            <div class="hand minute" id="minuteHand"></div>
+            <div class="hand second" id="secondHand"></div>
+            <div class="center-dot"></div>
+          </div>
+        </div>
+
+        <div class="digital" role="status" aria-live="polite">
+          <div class="time-large" id="digitalTime">--:--:--</div>
+          <div class="date-small" id="dateStr">Loading date...</div>
+        </div>
+
+        <div class="footer">Tip: Click "Toggle Theme" to switch dark/light themes.</div>
+      </section>
+
+      <aside class="controls">
+        <div class="timer-display" aria-live="polite">
+          <div>
+            <div class="muted">Countdown Timer</div>
+            <div class="timer-big" id="timerDisplay">00:00:00</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end">
+            <div class="muted">Alarm sound will play when timer reaches zero</div>
+            <div class="row">
+              <button id="startBtn">Start</button>
+              <button id="pauseBtn" class="secondary">Pause</button>
+              <button id="resetBtn" class="secondary">Reset</button>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:8px;align-items:center">
+          <label style="min-width:80px">Minutes</label>
+          <input id="minutesInput" type="number" min="0" step="1" value="5">
+        </div>
+
+        <div style="display:flex;gap:8px;align-items:center">
+          <label style="min-width:80px">Seconds</label>
+          <input id="secondsInput" type="number" min="0" max="59" step="1" value="0">
+        </div>
+
+        <div class="muted">You can set minutes and seconds then press Start. Use Pause/Reset as needed.</div>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    // Clock
+    const hourHand = document.getElementById('hourHand');
+    const minuteHand = document.getElementById('minuteHand');
+    const secondHand = document.getElementById('secondHand');
+    const digitalTime = document.getElementById('digitalTime');
+    const dateStr = document.getElementById('dateStr');
+
+    function pad(n){ return String(n).padStart(2,'0') }
+
+    function updateClock(){
+      const now = new Date();
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+      const seconds = now.getSeconds();
+      const ms = now.getMilliseconds();
+
+      // analog rotation
+      const secondDeg = (seconds + ms/1000) * 6; // 360/60
+      const minuteDeg = (minutes + seconds/60) * 6; // 360/60
+      const hourDeg = ((hours % 12) + minutes/60) * 30; // 360/12
+
+      secondHand.style.transform = `translate(-50%,-100%) rotate(${secondDeg}deg)`;
+      minuteHand.style.transform = `translate(-50%,-100%) rotate(${minuteDeg}deg)`;
+      hourHand.style.transform = `translate(-50%,-100%) rotate(${hourDeg}deg)`;
+
+      // digital
+      const hh = pad(hours); const mm = pad(minutes); const ss = pad(seconds);
+      digitalTime.textContent = `${hh}:${mm}:${ss}`;
+      dateStr.textContent = now.toLocaleDateString(undefined,{weekday:'short',year:'numeric',month:'short',day:'numeric'});
+    }
+
+    // start clock
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    // Theme toggle
+    const themeBtn = document.getElementById('themeBtn');
+    const root = document.documentElement;
+    let dark = false;
+    function applyTheme(){
+      if(dark){ root.classList.add('dark'); document.body.classList.add('dark') } else { root.classList.remove('dark'); document.body.classList.remove('dark') }
+    }
+    themeBtn.addEventListener('click', ()=>{ dark = !dark; applyTheme(); });
+
+    // Timer
+    const minutesInput = document.getElementById('minutesInput');
+    const secondsInput = document.getElementById('secondsInput');
+    const startBtn = document.getElementById('startBtn');
+    const pauseBtn = document.getElementById('pauseBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const timerDisplay = document.getElementById('timerDisplay');
+
+    let timerTotal = 0; // seconds
+    let timerRemaining = 0;
+    let timerInterval = null;
+    let timerRunning = false;
+
+    function formatTime(s){
+      const hh = Math.floor(s/3600); const mm = Math.floor((s%3600)/60); const ss = s%60;
+      return `${pad(hh)}:${pad(mm)}:${pad(ss)}`;
+    }
+
+    function updateTimerDisplay(){ timerDisplay.textContent = formatTime(timerRemaining) }
+
+    function beep(){
+      try{
+        const ac = new (window.AudioContext || window.webkitAudioContext)();
+        const o = ac.createOscillator();
+        const g = ac.createGain();
+        o.type = 'sine'; o.frequency.value = 880;
+        g.gain.value = 0.001;
+        o.connect(g); g.connect(ac.destination);
+        o.start();
+        g.gain.exponentialRampToValueAtTime(0.3, ac.currentTime + 0.02);
+        setTimeout(()=>{ g.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + 0.4); o.stop(ac.currentTime + 0.5); ac.close(); }, 400);
+      }catch(e){ console.log('Audio not supported', e) }
+    }
+
+    function startTimer(){
+      if(timerRunning) return;
+      timerTotal = Math.max(0, Number(minutesInput.value)*60 + Number(secondsInput.value));
+      timerRemaining = timerTotal;
+      if(timerTotal <= 0) return;
+      timerRunning = true;
+      updateTimerDisplay();
+      timerInterval = setInterval(()=>{
+        if(timerRemaining <= 0){ clearInterval(timerInterval); timerRunning = false; updateTimerDisplay(); beep(); alert('Timer finished'); return }
+        timerRemaining -= 1; updateTimerDisplay();
+      }, 1000);
+    }
+
+    function pauseTimer(){ if(timerInterval){ clearInterval(timerInterval); timerInterval = null; timerRunning = false } }
+    function resetTimer(){ pauseTimer(); timerTotal = Math.max(0, Number(minutesInput.value)*60 + Number(secondsInput.value)); timerRemaining = timerTotal; updateTimerDisplay(); }
+
+    startBtn.addEventListener('click', ()=> startTimer());
+    pauseBtn.addEventListener('click', ()=> pauseTimer());
+    resetBtn.addEventListener('click', ()=> resetTimer());
+
+    // initialize display
+    timerRemaining = Number(minutesInput.value)*60 + Number(secondsInput.value);
+    updateTimerDisplay();
+
+    // accessible keyboard: space/enter on theme button
+    themeBtn.addEventListener('keydown', (e)=>{ if(e.key===' ' || e.key==='Enter'){ e.preventDefault(); themeBtn.click(); } });
+
+  </script>
+</body>
+</html>
