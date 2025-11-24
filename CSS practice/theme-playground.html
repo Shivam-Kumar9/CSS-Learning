@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Theme Playground — Live CSS Variables Editor</title>
+  <style>
+    :root{
+      --bg: #f6f7fb;
+      --card: #ffffff;
+      --text: #0b1220;
+      --muted: #6b7280;
+      --primary: #6366f1;
+      --accent: #8b5cf6;
+      --radius: 12px;
+      --gap: 16px;
+      --padding: 16px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;background:var(--bg);font-family:Inter,Segoe UI,system-ui,Arial;color:var(--text);padding:28px;display:flex;justify-content:center}
+    .wrap{width:100%;max-width:1100px}
+    h1{margin:0 0 6px;font-size:1.15rem}
+    .lead{color:var(--muted);margin-bottom:18px}
+
+    .layout{display:grid;grid-template-columns:360px 1fr;gap:20px}
+
+    .panel{background:var(--card);padding:16px;border-radius:12px;box-shadow:0 8px 20px rgba(2,6,23,0.06)}
+
+    .controls{display:flex;flex-direction:column;gap:12px}
+    .row{display:flex;gap:8px;align-items:center}
+    label{font-size:0.9rem;min-width:110px;color:var(--muted)}
+    input[type=color], input[type=range], input[type=number], select{padding:8px;border-radius:8px;border:1px solid #e6e9ef}
+    input[type=color]{width:48px;height:36px;padding:4px}
+
+    .preview{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .card{padding:var(--padding);border-radius:var(--radius);background:linear-gradient(180deg,rgba(99,102,241,0.04),transparent);}
+
+    .btn{background:var(--primary);color:#fff;border:0;padding:10px 12px;border-radius:8px;cursor:pointer}
+    .btn.secondary{background:#eef2ff;color:var(--primary)}
+    .presets{display:flex;gap:8px;flex-wrap:wrap}
+    .preset{padding:8px 10px;border-radius:8px;border:1px solid #e6e9ef;background:#fff;cursor:pointer}
+
+    pre{background:#0b1220;color:#dfe9ff;padding:12px;border-radius:8px;overflow:auto;font-family:ui-monospace,Menlo,monospace}
+
+    @media (max-width:980px){.layout{grid-template-columns:1fr}.preview{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+      <div>
+        <h1>Theme Playground</h1>
+        <div class="lead">Edit CSS variables live, preview UI components, and copy the CSS variables to reuse in your projects.</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button id="copyBtn" class="btn">Copy CSS</button>
+        <button id="resetBtn" class="btn secondary">Reset</button>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="panel">
+        <div class="controls">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <strong>Variables</strong>
+            <span class="muted">Live update</span>
+          </div>
+
+          <div class="row">
+            <label for="primaryColor">Primary</label>
+            <input id="primaryColor" type="color" value="#6366f1">
+            <input id="primaryRange" type="range" min="0" max="100" value="64" style="flex:1">
+          </div>
+
+          <div class="row">
+            <label for="accentColor">Accent</label>
+            <input id="accentColor" type="color" value="#8b5cf6">
+          </div>
+
+          <div class="row">
+            <label for="bgColor">Background</label>
+            <input id="bgColor" type="color" value="#f6f7fb">
+          </div>
+
+          <div class="row">
+            <label for="cardColor">Card</label>
+            <input id="cardColor" type="color" value="#ffffff">
+          </div>
+
+          <div class="row">
+            <label for="textColor">Text</label>
+            <input id="textColor" type="color" value="#0b1220">
+          </div>
+
+          <div class="row">
+            <label for="radius">Radius</label>
+            <input id="radius" type="range" min="0" max="48" value="12" style="flex:1">
+            <input id="radiusVal" type="number" min="0" max="48" value="12" style="width:64px">
+          </div>
+
+          <div class="row">
+            <label for="gap">Gap</label>
+            <input id="gap" type="range" min="4" max="40" value="16" style="flex:1">
+            <input id="gapVal" type="number" min="4" max="40" value="16" style="width:64px">
+          </div>
+
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px">
+            <strong>Presets</strong>
+            <span class="muted">Click to apply</span>
+          </div>
+          <div class="presets">
+            <div class="preset" data-primary="#6366f1" data-accent="#8b5cf6" data-bg="#f6f7fb" data-card="#ffffff" data-text="#0b1220" data-radius="12" data-gap="16">Default</div>
+            <div class="preset" data-primary="#ef4444" data-accent="#f97316" data-bg="#fff7f6" data-card="#fff" data-text="#1f2937" data-radius="10" data-gap="12">Warm</div>
+            <div class="preset" data-primary="#10b981" data-accent="#06b6d4" data-bg="#f0fdf4" data-card="#ffffff" data-text="#043028" data-radius="18" data-gap="20">Fresh</div>
+            <div class="preset" data-primary="#111827" data-accent="#6b7280" data-bg="#0b1220" data-card="#071028" data-text="#e6eefb" data-radius="8" data-gap="14">Midnight</div>
+          </div>
+
+        </div>
+      </aside>
+
+      <section class="panel">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <strong>Preview</strong>
+          <span class="muted">Components use your variables</span>
+        </div>
+
+        <div class="preview">
+          <div class="card" style="--padding:var(--gap);">
+            <h3 style="margin:0 0 8px;color:var(--primary)">Product title</h3>
+            <p class="muted">A short description to preview text color and card background.</p>
+            <div style="display:flex;gap:8px;margin-top:12px">
+              <button class="btn">Primary</button>
+              <button class="btn secondary">Secondary</button>
+            </div>
+          </div>
+
+          <div class="card" style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div>
+                <div style="font-weight:700;color:var(--primary)">Account</div>
+                <div class="muted">username@example.com</div>
+              </div>
+              <div style="background:var(--card);padding:8px;border-radius:8px;border:1px solid rgba(0,0,0,0.04)">A</div>
+            </div>
+
+            <div style="display:flex;gap:8px">
+              <div style="flex:1;background:linear-gradient(90deg,var(--primary),var(--accent));height:8px;border-radius:6px"></div>
+              <div style="width:120px;text-align:right;color:var(--muted)">Status: Active</div>
+            </div>
+
+            <pre id="cssPreview">/* CSS variables shown here */</pre>
+          </div>
+        </div>
+
+      </section>
+    </div>
+  </main>
+
+  <script>
+    // Elements
+    const vars = {
+      '--primary': document.getElementById('primaryColor'),
+      '--accent': document.getElementById('accentColor'),
+      '--bg': document.getElementById('bgColor'),
+      '--card': document.getElementById('cardColor'),
+      '--text': document.getElementById('textColor'),
+    };
+
+    const primaryRange = document.getElementById('primaryRange');
+    const radius = document.getElementById('radius');
+    const radiusVal = document.getElementById('radiusVal');
+    const gap = document.getElementById('gap');
+    const gapVal = document.getElementById('gapVal');
+    const copyBtn = document.getElementById('copyBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const presets = document.querySelectorAll('.preset');
+    const cssPreview = document.getElementById('cssPreview');
+
+    // Initialize from inputs
+    function setVar(name, value){ document.documentElement.style.setProperty(name, value); }
+
+    // sync value inputs
+    function init(){
+      setVar('--primary', vars['--primary'].value);
+      setVar('--accent', vars['--accent'].value);
+      setVar('--bg', vars['--bg'].value);
+      setVar('--card', vars['--card'].value);
+      setVar('--text', vars['--text'].value);
+      setVar('--radius', radius.value + 'px');
+      setVar('--gap', gap.value + 'px');
+
+      // optional: tint primary based on range (lightness) — simple HSL adjust
+      updateCssPreview();
+    }
+
+    Object.keys(vars).forEach(k => {
+      vars[k].addEventListener('input', (e)=>{ setVar(k, e.target.value); updateCssPreview(); });
+    });
+
+    // primary range only used to alter hue/lightness of primary (demo)
+    primaryRange.addEventListener('input', (e)=>{
+      // compute a tint by mixing with white — simple approach
+      const v = Number(e.target.value);
+      // convert hex to rgb, blend with white by v%
+      const hex = vars['--primary'].value.replace('#','');
+      const r = parseInt(hex.substring(0,2),16); const g = parseInt(hex.substring(2,4),16); const b = parseInt(hex.substring(4,6),16);
+      const mix = (c) => Math.round((255 * (100-v) + c * v) / 100);
+      const nr = mix(r), ng = mix(g), nb = mix(b);
+      const newHex = '#'+[nr,ng,nb].map(x=>x.toString(16).padStart(2,'0')).join('');
+      setVar('--primary', newHex);
+      // also update color input visual — don't change the input value because user may still want original; optional
+      updateCssPreview();
+    });
+
+    radius.addEventListener('input', (e)=>{ radiusVal.value = e.target.value; setVar('--radius', e.target.value + 'px'); updateCssPreview() });
+    radiusVal.addEventListener('input', (e)=>{ radius.value = e.target.value; setVar('--radius', e.target.value + 'px'); updateCssPreview() });
+    gap.addEventListener('input', (e)=>{ gapVal.value = e.target.value; setVar('--gap', e.target.value + 'px'); updateCssPreview() });
+    gapVal.addEventListener('input', (e)=>{ gap.value = e.target.value; setVar('--gap', e.target.value + 'px'); updateCssPreview() });
+
+    // Presets
+    presets.forEach(p => p.addEventListener('click', ()=>{
+      const attrs = ['primary','accent','bg','card','text','radius','gap'];
+      attrs.forEach(a=>{
+        const data = p.getAttribute('data-'+a);
+        if(!data) return;
+        switch(a){
+          case 'primary': document.getElementById('primaryColor').value = data; setVar('--primary', data); break;
+          case 'accent': document.getElementById('accentColor').value = data; setVar('--accent', data); break;
+          case 'bg': document.getElementById('bgColor').value = data; setVar('--bg', data); break;
+          case 'card': document.getElementById('cardColor').value = data; setVar('--card', data); break;
+          case 'text': document.getElementById('textColor').value = data; setVar('--text', data); break;
+          case 'radius': document.getElementById('radius').value = data; document.getElementById('radiusVal').value = data; setVar('--radius', data+'px'); break;
+          case 'gap': document.getElementById('gap').value = data; document.getElementById('gapVal').value = data; setVar('--gap', data+'px'); break;
+        }
+      });
+      updateCssPreview();
+    }));
+
+    // Copy CSS variables
+    copyBtn.addEventListener('click', async ()=>{
+      const css = generateCss();
+      try{
+        await navigator.clipboard.writeText(css);
+        copyBtn.textContent = 'Copied!';
+        setTimeout(()=> copyBtn.textContent = 'Copy CSS', 1500);
+      }catch(e){ alert('Clipboard not available. You can copy manually from the preview below.'); }
+    });
+
+    resetBtn.addEventListener('click', ()=>{
+      // reset values to defaults
+      document.getElementById('primaryColor').value = '#6366f1';
+      document.getElementById('accentColor').value = '#8b5cf6';
+      document.getElementById('bgColor').value = '#f6f7fb';
+      document.getElementById('cardColor').value = '#ffffff';
+      document.getElementById('textColor').value = '#0b1220';
+      document.getElementById('radius').value = 12; document.getElementById('radiusVal').value = 12;
+      document.getElementById('gap').value = 16; document.getElementById('gapVal').value = 16;
+      setVar('--primary','#6366f1'); setVar('--accent','#8b5cf6'); setVar('--bg','#f6f7fb'); setVar('--card','#ffffff'); setVar('--text','#0b1220'); setVar('--radius','12px'); setVar('--gap','16px');
+      updateCssPreview();
+    });
+
+    function generateCss(){
+      const lines = [':root {',
+        `  --primary: ${getComputedStyle(document.documentElement).getPropertyValue('--primary').trim()};`,
+        `  --accent: ${getComputedStyle(document.documentElement).getPropertyValue('--accent').trim()};`,
+        `  --bg: ${getComputedStyle(document.documentElement).getPropertyValue('--bg').trim()};`,
+        `  --card: ${getComputedStyle(document.documentElement).getPropertyValue('--card').trim()};`,
+        `  --text: ${getComputedStyle(document.documentElement).getPropertyValue('--text').trim()};`,
+        `  --radius: ${getComputedStyle(document.documentElement).getPropertyValue('--radius').trim()};`,
+        `  --gap: ${getComputedStyle(document.documentElement).getPropertyValue('--gap').trim()};`,
+        '}
+']
+      return lines.join('\n');
+    }
+
+    function updateCssPreview(){ cssPreview.textContent = generateCss(); }
+
+    // init
+    init();
+
+  </script>
+</body>
+</html>
